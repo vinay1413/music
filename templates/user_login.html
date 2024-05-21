@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User - Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #00203fff;
+            color: black;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 300px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            background-color: #adefd1ff;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: whitesmoke;
+            color: black;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #00203fff;
+            color: whitesmoke;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #1ed760;
+        }
+        a {
+            color: black;
+            text-decoration: none;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        a:hover {
+            color: whitesmoke;
+        }
+    </style>
+</head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <center><b>{{ message }}</b></center>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<body>
+    <div class="container">
+        <h2>User Login</h2>
+        <form method="POST">
+            <label for="username">Username</label><br>
+            <input type="text" id="username" name="username" required><br>
+            <label for="password">Password</label><br>
+            <input type="password" id="password" name="password" required><br>
+            <button type="submit">Log In</button>
+        </form>
+        <a href="{{url_for('cregistration')}}">Don't have an account?</a><br>
+        <a href="{{url_for('forgot')}}">Forgot your password?</a>
+    </div>
+</body>
+</html>

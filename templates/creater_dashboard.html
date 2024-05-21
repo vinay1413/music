@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #00203fff;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #adefd1ff; 
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+            width: 100%;
+        }
+
+        h3 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: black;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button {
+            display: block;
+            width: 200px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #00203fff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 10px auto;
+        }
+
+        button:hover {
+            background-color: #25af5f;
+        }
+
+        button i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Creator Dashboard</h3>
+        <div>
+            <a href="{{url_for('uploadmusic')}}"><button><i class="fas fa-upload"></i> Upload Song</button></a>
+        </div>
+        <div>
+            <a href="{{url_for('creater_all_songs')}}"><button><i class="fas fa-music"></i> View Uploaded Songs</button></a>
+        </div>
+        <div>
+            <a href="{{url_for('clogout')}}"><button><i class="fas fa-sign-out-alt"></i> Logout</button></a>
+        </div>
+    </div>
+</body>
+</html>

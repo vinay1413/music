@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Melody - User Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #00203fff;
+            color: black;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 300px;
+            background-color: #adefd1ff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: whitesmoke;
+            color: black;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #00203fff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #1ed760;
+        }
+        a {
+            color: black;
+            text-decoration: none;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        a:hover {
+            color: whitesmoke;
+        }
+        .flash-message {
+            background-color: #1db954;
+            color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Create a Music Melody Account</h2>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form method="POST">
+            <label for="username">Username</label><br>
+            <input type="text" id="username" name="username" placeholder="Enter username (combination of text, special characters, numbers)" required><br>
+            <label for="email">Email</label><br>
+            <input type="email" id="email" name="email" placeholder="Enter email" required><br>
+            <label for="password">Password</label><br>
+            <input type="password" id="password" name="password" placeholder="Enter password" required><br>
+            <button type="submit">Sign Up</button>
+        </form>
+        <a href="{{url_for('ulogin')}}">Already have an account? Log in here</a><br>
+        <a href="{{url_for('forgot')}}">Forgot your password?</a>
+    </div>
+</body>
+</html>

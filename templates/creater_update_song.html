@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Song Information Form</title>
+    <link rel="stylesheet" href="#">
+</head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <center><b>{{ message }}</b></center>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<style>
+    body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1glklRpgZ0hJoLqzZdyQRU6goo4mIlL7bd6LeDaGs3A&s'); /* Replace 'background.jpg' with your image path */
+    background-size: cover;
+    background-position: center;
+    color: #7ae7e9;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    border-radius: 10px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="checkbox"],
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+}
+
+.checkbox-group label {
+    margin-right: 15px;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+button {
+    background-color: #4CAF50;
+    color: #6be333;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+</style>
+<body>
+    {{i}}
+    <div class="container">
+        <h1>Update Song Information</h1>
+        
+        <form action="#" method="POST">
+            <div class="form-group">
+                <label for="song_name">Song Name:</label><br>
+                <input type="text" id="song_name" name="song_name" value="{{ i[1] }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="release_date">Release Date: {{ i[2]}}</label><br>
+                <input type="date" id="release_date" name="release_date" value="{{ i[2] }}">
+            </div>
+            
+          
+            <div class="form-group">
+                <label for="mood">Mood: {{ i[5]}}</label><br>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="happy" name="mood[]" value="Happy">
+                    <label for="happy">Happy</label>
+                    <input type="checkbox" id="sad" name="mood[]" value="Sad">
+                    <label for="sad">Sad</label>
+                    <input type="checkbox" id="romantic" name="mood[]" value="Romantic">
+                    <label for="romantic">Romantic</label>
+                    <input type="checkbox" id="energetic" name="mood[]" value="Energetic">
+                    <label for="energetic">Energetic</label>
+                    <input type="checkbox" id="calm" name="mood[]" value="Calm">
+                    <label for="calm">Calm</label>
+                    <input type="checkbox" id="excited" name="mood[]" value="Excited">
+                    <label for="excited">Excited</label><br>
+                    <input type="checkbox" id="melancholic" name="mood[]" value="Melancholic">
+                    <label for="melancholic">Melancholic</label>
+                    <input type="checkbox" id="peaceful" name="mood[]" value="Peaceful">
+                    <label for="peaceful">Peaceful</label>
+                    <input type="checkbox" id="upbeat" name="mood[]" value="Upbeat">
+                    <label for="upbeat">Upbeat</label>
+                </div>
+            </div>
+         
+            <div class="form-group">
+                <label for="album_name">Album Name:</label><br>
+                <input type="text" id="album_name" name="album_name"  value="{{ i[7] }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="artist_name">Artist Name:</label><br>
+                <input type="text" id="artist_name" name="artist_name"  value="{{ i[10] }}">
+            </div>
+           
+            <div class="form-group">
+                <label for="artist_name">Artist2 Name:</label><br>
+                <input type="text" id="artist_name" name="artist2"  value="{{ i[12] }}">
+            </div>
+        
+            
+            <div class="form-group">
+                <label for="singer_name">Singer Name:</label><br>
+                <input type="text" id="singer_name" name="singer_name"  value="{{ i[16] }}">
+            </div>
+          
+            <div class="form-group">
+                <label for="singer_name">Singer2 Name:</label><br>
+                <input type="text" id="singer_name" name="singer2"  value="{{ i[18] }}">
+            </div>
+          
+            <div class="form-group">
+                <label for="director_name">Director Name:</label><br>
+                <input type="text" id="director_name" name="director_name"  value=" {{ i[14] }}">
+            </div>
+            
+            <button type="submit">Submit</button>
+        </form>
+      
+    </div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>play the song</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+     body {
+        background-color: #00203fff;
+        color: black;
+     }
+     .card {
+        background-color: #ADEFD1FF;
+     }
+    </style>
+</head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <center><b>{{ message }}</b></center>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<body>
+    <div class="container">
+        <a href="{{ url_for('index') }}" class="ms-1"><button>BACK</button></a>
+        <h1 class="text-white">Song</h1>
+        <div class="row">
+            {% if song %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ url_for('static', filename=song[3]+'.jpg') }}" class="card-img-top" alt="Song Picture">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ song[1] }}</h5>
+                            <p class="card-text">Director Name: {{ song[7] }}</p>
+                            <p class="card-text">Artist 1: {{ song[4] }}</p>
+                            <p class="card-text">Artist 2: {{ song[5] }}</p> <!-- Modify this line to display artist2 -->
+                            <p class="card-text">Singer 1: {{ song[8] }}</p>
+                            {% if song[9] is not none %}
+                                <p class="card-text">Singer 2: {{ song[9] }}</p> <!-- Modify this line to display singer2 -->
+                            {% endif %}
+                            <p class="card-text">Album: {{ song[6] }}</p>
+                            <p class="card-text">Release Year: {{ song[10] }}</p>
+                            <p class="card-text">Uploaded Date: {{ song[11] }}</p>
+                            <p class="card-text">Likes: {{ count }}</p>
+                            <p class="card-text">Mood: {{ song[13] }}</p>
+                            <!-- Like/Unlike Form -->
+                            
+                            {% if lcount %}
+                                <form action="{{ url_for('like_song', song_id=song[0]) }}" method="POST">
+                                    <input type="hidden" name="unlike" value="true">
+                                    <input type="hidden" name="song_id" value="{{ song[0] }}">
+                                    <button type="submit" class="btn btn-link">
+                                        <i class="fas fa-heart text-danger"></i> Unlike
+                                    </button>
+                                </form>
+                            {% else %}
+                                <form action="{{ url_for('like_song', song_id=song[0]) }}" method="POST">
+                                    <input type="hidden" name="unlike" value="false">
+                                    <input type="hidden" name="song_id" value="{{ song[0] }}">
+                                    <button type="submit" class="btn btn-link">
+                                        <i class="far fa-heart"></i> Like
+                                    </button>
+                                </form>
+                            {% endif %}
+
+                            
+                            <!-- End Like/Unlike Form -->
+                            <audio controls>
+                                <source src="{{ url_for('static', filename=song[2]+'.mp3') }}" type="audio/mp3">
+                            </audio>
+                            <center>   <a href="{{ url_for('add_to_favourites', song_id=song[0],name=song[1],pic=song[3],audio=song[2],album=song[6])}}" class="btn bg-danger mt-2">Add to Favorites</a></center>
+                                     
+                        </div>
+                    </div>
+                
+                </div>
+          
+
+            {% else %}
+                <p>No song found.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

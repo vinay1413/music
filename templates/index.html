@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <title>Melody Stream</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        body {
+          font-family:'Roboto', sans-serif;
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          color: #00203fff;
+          width: 100%;
+        }
+        body::-webkit-scrollbar {
+          display: none;
+        }
+        .container {
+          height: 100%;
+          width: 100%;
+          background-color: #00203fff;
+          color: #00796b;
+        }
+        .row {
+            display: flex;
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          overflow-x: auto;
+          white-space: nowrap;
+          overflow-y: hidden;
+        }
+        .row::-webkit-scrollbar {
+          display: none;
+        }
+        .navbar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: #00796b;
+          padding: 15px 25px;
+          font-size: larger;
+        }
+        .navbar a {
+          color: white;
+          text-decoration: none;
+          padding: 0 15px;
+        }
+        .navbar .dropdown {
+          display: inline-block;
+          transition: all 0.3s ease;
+          color: #fea889;
+        }
+        
+        .navbar .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #fea889;
+          min-width: 120px;
+          z-index: 1;
+          transition: all 0.3s ease;
+        }
+        
+        .navbar .dropdown-content a {
+          color: white;
+          padding: 12px;
+          text-decoration: none;
+          display: block;
+          transition: all 0.3s ease;
+        }
+        .navbar .dropdown:hover .dropdown-content {
+          display: block;
+        }
+        .search-container {
+          display: flex;
+          align-items: center;
+          padding: 0 10px;
+        }
+        
+        .search-container input[type="text"] {
+            width: 150px;
+          padding: 8px;
+          margin-right: 10px;
+          border: none;
+          border-radius: 5px;
+          background-color: white;
+          color: black;
+          border: 1px solid whitesmoke;
+        }
+        
+        .search-container button {
+          padding: 8px;
+          border: none;
+          border-radius: 5px;
+          background-color: blue;
+          color: white;
+          font-weight: 600;
+          cursor: pointer;
+        }
+        
+        .col-md-4 {
+    flex: 0 0 calc(25% - 5px); /* Adjust width and gap */
+    max-width: calc(25% - 5px); /* Adjust width and gap */
+    padding: 5px; /* Adjust padding for cards */
+    margin: 5px; /* Add margin around cards */
+}
+.row .col-md-4:nth-child(4n+1) {
+    margin-left: 0; /* Set left margin of the first item in each row to 0 */
+}
+.row {
+    margin-left: 30px; /* Add a margin to the left of the row */
+    margin-right: -5px;
+}
+        .mood-container {
+          display: inline-block;
+          color: whitesmoke;
+          padding: 10px 20px;
+          margin-right: 10px;
+          transition: all 0.3s ease;
+        } 
+        .mood-container:hover {
+          background-color: #adefd1ff;
+          color: black;
+        }
+        
+        .mood-link {
+          color: inherit;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        
+        .mood-scroll {
+          display: flex;
+          overflow-x: auto;
+          flex-wrap: nowrap;
+          justify-content: space-between;
+          background-color: #fea889;
+        }
+        .card_container {
+          display: flex;
+          padding: 0px 15px;
+          height: fit-content;
+          animation: fade 1.5s ease forwards;
+        }
+        
+        .card {
+          overflow: hidden;
+          width: 100%;
+          max-width: 200px;
+          transition: transform 0.3s ease;
+        }
+        .card-img-top-songs {
+          width: 167px;
+          height: 167px;
+          object-fit: cover;
+          border-radius: 10px;
+          overflow: hidden;
+        }
+        .card-img-top {
+          width: 200px;
+          height: 200px;
+          object-fit: cover;
+          border-radius: 50%;
+          overflow: hidden;
+        }
+        .card-img-top img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .card-body{
+            padding: 10px;
+        }
+        .card-body a {
+          line-height: 1;
+          text-align: center;
+        }
+        .card-title {
+          font-size: 16px;
+          color: #fea889;
+        }
+        
+        .card-body a {
+          text-decoration: none;
+          color: skyblue;
+        }
+        .card-body a:hover{
+            color: red;
+        }
+        @media (max-width: 768px) {
+            .col-md-4 {
+                flex: 0 0 calc(50% - 10px); /* Adjust width and gap for smaller screens */
+                max-width: calc(50% - 10px); /* Adjust width and gap for smaller screens */
+            }
+            .search-container input[type="text"] {
+                width: 100px; /* Adjust width for smaller screens */
+            }
+        }
+        @media (max-width: 576px) {
+            .col-md-4 {
+                flex: 0 0 calc(100% - 10px); /* Adjust width and gap for smaller screens */
+                max-width: calc(100% - 10px); /* Adjust width and gap for smaller screens */
+            }
+            .search-container input[type="text"] {
+                width: 90px; /* Adjust width for smaller screens */
+            }
+        }
+</style>
+</head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <center><b>{{ message }}</b></center>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="Melody-Stream">
+                <a href="{{url_for('index')}}"><b>Melody Stream</b></a>
+                <div class="dropdown">
+                    <a href="#">User</a> 
+                    {% if session.get('user') %}
+                    {{session.get('user')}}
+                    <a href="{{url_for('viewcart')}}">View favourites</a>
+                    <a href="{{url_for('ulogout')}}">Logout</a>
+                    {% endif %}
+                    <div class="dropdown-content">
+                        <a href="{{url_for('uregistration')}}">Register</a>
+                       
+                        {% if not session.get('user') %}
+                        <a href="{{url_for('ulogin')}}">Login</a>
+                        {% endif %}
+                       
+
+                    </div>
+                </div>
+               
+                <div class="dropdown">
+                    <a href="#">Creator</a>
+                    <div class="dropdown-content">
+                        <a href="{{url_for('cregistration')}}">Register</a>
+                        <a href="{{url_for('clogin')}}">Login</a>
+                    </div>
+                </div>
+            </div>
+            <div class="search-container">
+                <form method="POST" action="{{url_for('search')}}">
+                <input type="text" placeholder="Search..." name="search">
+                <button type="submit">Search</button>
+            </form>
+            </div>
+        </div>
+        <div class="mood-scroll">
+            <div class="mood-container">
+                <a href="{{url_for('moodsongs',mood='Happy')}}" class="mood-link">Happy</a>
+            </div>
+            <div class="mood-container">
+                <a href="{{url_for('moodsongs',mood='Sad')}}" class="mood-link">Sad</a>
+            </div>
+            <div class="mood-container">
+                <a href="{{url_for('moodsongs',mood='Romantic')}}" class="mood-link">Romantic</a>
+            </div>
+            <div class="mood-container">
+                <a href="{{url_for('moodsongs',mood='Energetic')}}" class="mood-link">Energetic</a>
+            </div>
+            <div class="mood-container">
+                <a href="{{url_for('moodsongs',mood='Calm')}}" class="mood-link">Calm</a>
+            </div>
+            <div class="mood-container">
+                <a href="{{url_for('moodsongs',mood='Excited')}}" class="mood-link">Excited</a>
+            </div>
+            <div class="mood-container">
+                <a href="{{url_for('moodsongs',mood='Melancholic')}}" class="mood-link">Melancholic</a>
+            </div>
+            <div class="mood-container">
+                <a href="{{url_for('moodsongs',mood='Peaceful')}}" class="mood-link">Peaceful</a>
+            </div>
+            <div class="mood-container">
+                <a href="{{url_for('moodsongs',mood='Upbeat')}}" class="mood-link">Upbeat</a>
+            </div>
+        </div>
+        <h3>All Songs</h3>
+        <div class="row">
+            {% for i in so %}
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="{{url_for('static',filename=i[4]+'.jpg')}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{i[1]}}</h5>
+                        <a href="{{url_for('viewsongs',song_id = i[0],lcount=lcount)}}">view songs</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <h4>Albums</h4>
+        <div class="row">
+            {% for i in a %}
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="{{url_for('static',filename=i[4]+'.jpg')}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{i[1]}}</h5>
+                        <a href="{{url_for('viewalbumsongs',album_id=i[0])}}">view songs</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <h4>Artists</h4>
+        <div class="row">
+            {% for i in ar %}
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="{{url_for('static',filename=i[3]+'.jpg')}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{i[1]}}</h5>
+                        <a href="{{url_for('viewartistsongs',artist_id = i[0])}}">view songs</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <h4>Directors</h4>
+        <div class="row">
+            {% for i in d %}
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="{{url_for('static',filename=i[2]+'.jpg')}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{i[1]}}</h5>
+                        <a href="{{url_for('viewdirectorsongs',director_id = i[0])}}">view songs</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <h4>Singers</h4>
+        <div class="row">
+            {% for i in s %}
+            <div class="col-md-4">
+                <div class="card">
+                    <img class="card-img-top" src="{{url_for('static',filename=i[2]+'.jpg')}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{i[1]}}</h5>
+                        <a href="{{url_for('viewsingerssongs',singer_id = i[0])}}">view songs</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+

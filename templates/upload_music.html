@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Song</title>
+    <style>
+        .add-new-section {
+            margin-top: 10px;
+            float: right;
+            width: 20%; /* Adjust width as needed */
+        }
+
+        /* Additional styles to clear floats */
+        .form-group:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #00203fff;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            color: black;
+        }
+        #data_submit{
+          
+          background-color: #00203fff;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #ADEFD1FF; /* Transparency for the form */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: rgba(209, 202, 202, 0.9); /* Transparency for input fields */
+        }
+
+        input[type="submit"],
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #00203fff;
+            color: whitesmoke;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #0056b3;
+        }
+        @media only screen and (max-width: 768px) {
+            .container {
+                max-width: 95%;
+            }
+
+            .navbar a {
+                float: none;
+                display: block;
+                text-align: left;
+            }
+        }
+    </style>
+    <style>
+        body {
+           background-color: #00203fff;
+        }
+        .card {
+           background-color: #ADEFD1FF;
+        }
+       </style>
+</head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <center><b>{{ message }}</b></center>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<body>
+    <div class="container">
+        <a href="{{url_for('creater_dashboard')}}"><button>BACK</button></a>
+        <center><h2 style="color: #00203fff;">UPLOAD SONG</h2></center>
+        <form action="{{ url_for('uploadmusic') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
+            <div class="form-group">
+                <label for="song_name">Song Name:</label>
+                <input type="text" id="song_name" name="song_name" >
+            </div>
+          
+            <div class="form-group">
+                <label for="audio_file">Audio File:</label>
+                <input type="file" id="audio_file" name="audio_file" >
+            </div>
+            <div class="form-group">
+                <label for="song_picture">Song Picture:</label>
+                <input type="file" id="song_picture" name="song_picture" >
+            </div>
+            <div class="form-group">
+                <label for="Director">Director Name:</label>
+                <select id="Director" name="Director">
+                    <option value="">Select an Director</option>
+                    {% for  i in d %}
+                    {{i[0]}}
+                    <option value="{{i[0]}}">{{i[1]}}</option>
+                   {% endfor %}
+                </select>
+                <div class="form-group add-new-section">
+                <button type="button" onclick="addNewDirectorInput()">Add New Director</button>
+                </div>
+                <div id="new_director_input" style="display: none;">
+                    <label for="new_director">New Director Name:</label>
+                    <input type="text" id="new_director" name="new_director" >
+                    <label for="director_image">Director Image:</label>
+                    <input type="file" id="director_image" name="director_image" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Singers">Singers Name:</label>
+                <select id="Singers" name="singers">
+                    <option value="">Select a Singer</option>
+                    {% for  i in s %}
+                    <option value="{{i[0]}}">{{i[1]}}</option>
+                    
+                    {% endfor %}
+                </select>
+                <div class="form-group add-new-section">
+                <button type="button" onclick="addNewSingerInput()">Add New Singer</button>
+            </div>
+                <div id="new_singer_input" style="display: none;">
+                    <label for="new_singer">New Singer Name:</label>
+                    <input type="text" id="new_singer" name="new_singer" >
+                    <label for="singer_image">Singer Image:</label>
+                    <input type="file" id="singer_image" name="singer_image" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Singers_2">Singers Two Name:</label>
+                <select id="Singers_2" name="singers_2">
+                    <option value="">Select a Singer</option>
+                    {% for  i in s %}
+                    <option value="{{i[0]}}">{{i[1]}}</option>
+                    
+                    {% endfor %}
+                </select>
+                <div class="form-group add-new-section">
+                <button type="button" onclick="addNewSinger_oneInput()">Add New Singer</button>
+            </div>
+                <div id="new_singer_input_2" style="display: none;">
+                    <label for="new_singer_2">New Singer Name:</label>
+                    <input type="text" id="new_singer_2" name="new_singer_2" >
+                    <label for="singer_image">Singer Image:</label>
+                    <input type="file" id="singer_image" name="singer_image_2" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="artist_name">Artist Name_one:</label>
+                <select id="artist_name" name="artist_name">
+                    <option value="">Select an Artist</option>
+                    {% for i in a %}
+                    <option value="{{i[0]}}">{{i[1]}}</option>
+                    {% endfor %}
+                </select>
+                <div class="form-group add-new-section">
+                <button type="button" onclick="addNewArtistInput()">Add New Artist</button>
+                </div>
+                <div id="new_artist_input" style="display: none;">
+                    <label for="new_artist">New Artist Name:</label>
+                    <input type="text" id="new_artist" name="new_artist" >
+                    <label for="artist_image">Artist Image:</label>
+                    <input type="file" id="artist_image" name="artist_image" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="artist_name_2">Artist Name_two:</label>
+                <select id="artist_name_2" name="artist_name_2">
+                    <option value="">Select an Artist</option>
+                    {% for i in a %}
+                    <option value="{{i[0]}}">{{i[1]}}</option>
+                    {% endfor %}
+                </select>
+                <div class="form-group add-new-section">
+                <button type="button" onclick="addNewArtist_oneInput()">Add New Artist</button>
+                </div>
+                <div id="new_artist_input_2" style="display: none;">
+                    <label for="new_artist">New Artist Name:</label>
+                    <input type="text" id="new_artist_2" name="new_artist_2" >
+                    <label for="artist_image">Artist Image:</label>
+                    <input type="file" id="artist_image" name="artist_image_2" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="album_name">Album Name:</label>
+                <select id="album_name" name="album_name">
+                    <option value="">Select an album</option>
+                    {% for i in al %}
+                    <option value="{{i[0]}}">{{i[1]}}</option>
+                    {% endfor %}
+                </select>
+                <div class="form-group add-new-section">
+                <button type="button" onclick="addNewAlbumInput()">Add New Album</button>
+            </div>
+                <div id="new_album_input" style="display: none;">
+                    <label for="new_album">New Album Name:</label>
+                    <input type="text" id="new_album" name="new_album" >
+                    <label for="album_image">Album Image:</label>
+                    <input type="file" id="album_image" name="album_image" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="mood">Mood:</label><br>
+                
+                    <div style="display: flex; flex-wrap: wrap;">
+                        <input type="checkbox" id="happy" name="mood" value="Happy">
+                        <label for="happy">Happy</label>
+                        <input type="checkbox" id="sad" name="mood" value="Sad">
+                        <label for="sad">Sad</label>
+                        <input type="checkbox" id="romantic" name="mood" value="Romantic">
+                        <label for="romantic">Romantic</label>
+                        <input type="checkbox" id="energetic" name="mood" value="Energetic">
+                        <label for="energetic">Energetic</label>
+                        <input type="checkbox" id="calm" name="mood" value="Calm">
+                        <label for="calm">Calm</label>
+                        <input type="checkbox" id="excited" name="mood" value="Excited">
+                        <label for="excited">Excited</label><br>
+                        <input type="checkbox" id="melancholic" name="mood" value="Melancholic">
+                        <label for="melancholic">Melancholic</label>
+                        <input type="checkbox" id="peaceful" name="mood" value="Peaceful">
+                        <label for="peaceful">Peaceful</label>
+                        <input type="checkbox" id="upbeat" name="mood" value="Upbeat">
+                        <label for="upbeat">Upbeat</label>
+                    </div>
+                </div>
+           
+            
+            <div class="form-group">
+                <label for="release_year">Release Year:</label>
+                <input type="date" id="release_year" name="release_year" required>
+            </div>
+            <center><button type="submit" id="data_submit">SUBMIT</button></center>
+        </form>
+    </div>
+    <script>
+    function addNewDirectorInput() {
+        var newDirectorInput = document.getElementById('new_director_input');
+        var directorSelect = document.getElementById('Director');
+        directorSelect.style.display = 'none'; // Hide the select dropdown
+        newDirectorInput.style.display = 'block'; // Display the input fields for new director
+    }
+    
+    function addNewSingerInput() {
+        var newSingerInput = document.getElementById('new_singer_input');
+        var singerSelect = document.getElementById('Singers');
+        singerSelect.style.display = 'none'; // Hide the select dropdown
+        newSingerInput.style.display = 'block'; // Display the input fields for new singer
+    }
+    
+    
+    function addNewArtistInput() {
+        var newArtistInput = document.getElementById('new_artist_input');
+        var artistSelect = document.getElementById('artist_name');
+        artistSelect.style.display = 'none'; // Hide the select dropdown
+        newArtistInput.style.display = 'block'; // Display the input fields for new artist
+    }
+    function addNewArtist_oneInput() {
+        var newArtistInput = document.getElementById('new_artist_input_2');
+        var artistSelect = document.getElementById('artist_name_2');
+        artistSelect.style.display = 'none'; // Hide the select dropdown
+        newArtistInput.style.display = 'block'; // Display the input fields for new artist
+    }
+    function addNewSinger_oneInput() {
+        var newSingerInput = document.getElementById('new_singer_input_2');
+        var singerSelect = document.getElementById('Singers_2');
+        singerSelect.style.display = 'none'; // Hide the select dropdown
+        newSingerInput.style.display = 'block'; // Display the input fields for new singer
+    }
+    
+    function addNewAlbumInput() {
+        var newAlbumInput = document.getElementById('new_album_input');
+        var albumSelect = document.getElementById('album_name');
+        albumSelect.style.display = 'none'; // Hide the select dropdown
+        newAlbumInput.style.display = 'block'; // Display the input fields for new album
+    }
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    var directorSelect = document.getElementById('Director');
+    var singerSelect = document.getElementById('Singers');
+    var singerSelect = document.getElementById('Singers_2');
+    var artistSelect = document.getElementById('artist_name');
+    var artistSelect2 = document.getElementById('artist_name_2');
+    var albumSelect = document.getElementById('album_name');
+
+    var selectedDirector = directorSelect.value.trim();
+    var newDirector = document.getElementById('new_director').value.trim();
+    var selectedSinger = singerSelect.value.trim();
+    var newSinger = document.getElementById('new_singer').value.trim();
+    var selectedSinger = singerSelect_2.value.trim();
+    var newSinger_2 = document.getElementById('new_singer_2').value.trim();
+    var selectedArtist = artistSelect.value.trim();
+    var newArtist = document.getElementById('new_artist').value.trim();
+    var selectedArtist2 = artistSelect2.value.trim();
+    var newArtist2 = document.getElementById('new_artist_2').value.trim();
+    var selectedAlbum = albumSelect.value.trim();
+    var newAlbum = document.getElementById('new_album').value.trim();
+
+    // Check if both the select field and the corresponding input field for entering a new value are empty
+    if (selectedDirector === '' && newDirector === '') {
+        alert('Please select or enter a director name.');
+        event.preventDefault(); // Prevent form submission
+    }
+
+    if (selectedSinger === '' && newSinger === '') {
+        alert('Please select or enter a singer name.');
+        event.preventDefault(); // Prevent form submission
+    }
+
+    if (selectedArtist === '' && newArtist === '') {
+        alert('Please select or enter an artist name.');
+        event.preventDefault(); // Prevent form submission
+    }
+    
+
+    if (selectedAlbum === '' && newAlbum === '') {
+        alert('Please select or enter an album name.');
+        event.preventDefault(); // Prevent form submission
+    }
+});
+
+</script>
+    </body>
+</html>

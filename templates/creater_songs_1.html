@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View All Songs Created by Creator</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .song-card {
+            transition: transform 0.3s ease;
+        }
+        .song-card:hover {
+            transform: translateY(-10px);
+        }
+    </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #00203fff; /* Background color for the body */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto; /* Center the container and add space around it */
+            padding: 20px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* Add space between cards */
+        }
+
+        .card {
+            width: 100%;
+            max-width: 300px; /* Set a max-width for each card */
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #adefd1ff; /* Default background color for cards */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+            transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .card-description {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .card-link {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body> 
+    <a href="{{url_for('creater_dashboard')}}" class="btn btn-primary mb-3">BACK</a>
+    <div class="container">
+        <div class="row">
+            {% for song in songs_info %}
+            <div class="col-md-4 mb-4">
+                <div class="card song-card">
+                    <img src="{{ url_for('static', filename=song[2]+'.jpg') }}" class="card-img-top" alt="Song Picture">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ song[1] }}</h5>
+                        <p class="card-text">Album: {{ song[3] }}</p>
+                        <p class="card-text">Artist 1: {{ song[4] }}</p>
+                        {% if song[5] is not none %}
+                        <p class="card-text">Artist 2: {{ song[5] }}</p>
+                        {% endif %}
+                        <p class="card-text">Singer 1: {{ song[6] }}</p>
+                        {% if song[7] is not none %}
+                        <p class="card-text">Singer 2: {{ song[7] }}</p>
+                        {% endif %}
+                        <a href="{{ url_for('songsdashboard', sid=song[0]) }}" class="btn btn-primary">View Song</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

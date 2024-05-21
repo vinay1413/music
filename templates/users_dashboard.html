@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Songs</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #00203fff;
+            padding-top: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            margin-bottom: 5px;
+        }
+
+        audio {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .button {
+            margin-top: 10px;
+            background-color: #adefd1ff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #00203fff;
+        }
+
+        .btn-primary {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Songs</h1>
+        <a href="{{url_for('ulogout')}}" class="btn btn-danger">Logout</a>
+
+        <div class="row">
+            {% if songs %}
+                {% for song in songs %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="{{ url_for('static', filename=song[3]+'.jpg') }}" class="card-img-top" alt="Song Picture">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ song[0] }}</h5>
+                                <p class="card-text">Artist: {{ song[4] }}</p>
+                                <p class="card-text">Album: {{ song[1] }}</p>
+                                <p class="card-text">Release Year: {{ song[5] }}</p>
+                                <audio controls>
+                                    <source src="{{ url_for('static', filename=song[2]+'.mp3') }}" type="audio/mp3">
+                                </audio>
+                                <a href="{{ url_for('static', filename=song[2]+'.mp3') }}" download="{{ song[2] }}.mp3" class="btn btn-primary">Download and Share</a>
+                                <a href="{{ url_for('add_to_favourites', song_id=song[7],name=song[0],pic=song[3],audio=song[2],album=song[5]) }}" class="btn btn-success">Add to Favorites</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col">
+                    <p>No songs uploaded.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #00203fff;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #adefd1ff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h3 {
+            margin-top: 0;
+        }
+        .song-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        .song-details {
+            margin-bottom: 10px;
+        }
+        .song-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .song-actions a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .song-actions a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('index') }}"><button>BACK</button></a>
+        {% if items %}
+        {% for song in items %}
+        <div class="song-item">
+            <h3>{{ song[1] }}</h3>
+            <div class="song-details">
+                <p><strong>Artist 1:</strong> {{ song[4] }}</p>
+                {% if song[5] %}
+                <p><strong>Artist 2:</strong> {{ song[5] }}</p>
+                {% endif %}
+                <p><strong>Album:</strong> {{ song[6] }}</p>
+                <p><strong>Director:</strong> {{ song[7] }}</p>
+                <p><strong>Singer:</strong> {{ song[8] }}</p>
+                {% if song[9] %}
+                <p><strong>Singer 2:</strong> {{ song[9] }}</p>
+                {% endif %}
+                <p><strong>Release Year:</strong> {{ song[10] }}</p>
+                <p><strong>Uploaded At:</strong> {{ song[11] }}</p>
+                <p><strong>Likes:</strong> {{ song[12] }}</p>
+                <p><strong>Mood:</strong> {{ song[13] }}</p>
+            </div>
+            <div class="song-actions">
+                <a href="{{ url_for('viewsongs', song_id=song[0]) }}">View Song</a>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No data Found</p>
+        {% endif  %}
+    </div>
+</body>
+</html>
